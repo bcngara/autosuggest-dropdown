@@ -1,4 +1,3 @@
-Markdown
 
 # AutoSuggest Component with Hash Caching & Lazy Record Fallbacks
 
@@ -38,3 +37,39 @@ The input operates with dual state representation: a visible text input for huma
 ├── AutoSuggest.js      # Core component class
 ├── styles.css          # Optional default styling
 └── README.md
+```
+## Usage
+
+### HTML Markup
+```html
+<div class="autosuggest-container" id="customerSelect">
+    <input 
+        type="text" 
+        name="customer_name" 
+        placeholder="Type to search or enter new customer..." 
+        data-suggestion="/api/customers/options"
+    />
+    <input type="hidden" name="customer_id" />
+    <button type="button" class="btn-suggest-add hidden">Create Customer</button>
+</div>
+```
+
+## Quick Start
+
+### JS Initialization
+
+```javascript
+import { AutoSuggest } from './AutoSuggest.js';
+
+const suggest = new AutoSuggest('#customerSelect', {
+    onSelect: (id, name) => {
+        console.log(`Selected existing record ID: ${id}`);
+    },
+    onLooseChange: (textValue) => {
+        console.log(`User typed unlisted name: ${textValue}`);
+    },
+    onCreateRequest: (typedText) => {
+        console.log(`Trigger inline creation modal for: ${typedText}`);
+    }
+});
+```
